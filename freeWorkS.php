@@ -14,50 +14,72 @@ $user_email = $_SESSION["user_email"];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 All Work for Free - Student Work</title>
+    <title>🎉 All Work for Free - DeskDeal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #2d3436 0%, #1a1a2e 100%);
+            background: #0a0a1a;
             padding: 20px;
             overflow: hidden;
             position: relative;
         }
 
         /* Floating particles background */
-        body::before {
-            content: "🎉💰🎊💵🎈💲🥳💸🎁";
-            position: absolute;
-            font-size: 40px;
-            opacity: 0.05;
-            width: 200%;
-            height: 200%;
-            animation: floatParticles 20s infinite linear;
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
             pointer-events: none;
         }
 
-        @keyframes floatParticles {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        .bg-blob-1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            left: -200px;
+            background: radial-gradient(circle, #ff6b6b, #ff4757);
+        }
+
+        .bg-blob-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, #ffd93d, #ff6b6b);
+        }
+
+        .bg-blob-3 {
+            width: 250px;
+            height: 250px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ff4757, #ffd93d);
+            opacity: 0.1;
         }
 
         .container {
             position: relative;
             z-index: 10;
-            background: white;
-            padding: 50px 40px;
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 50px 45px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 550px;
             text-align: center;
@@ -65,7 +87,7 @@ $user_email = $_SESSION["user_email"];
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
+            0% { transform: scale(0.9); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
@@ -83,94 +105,98 @@ $user_email = $_SESSION["user_email"];
 
         .container h1 {
             font-size: 32px;
-            color: #1a1a2e;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
         }
 
         .container .subtitle {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 8px;
         }
 
         .container .user-badge {
             display: inline-block;
-            background: #fff0f0;
-            color: #ff4757;
-            padding: 5px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6px 18px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             margin-bottom: 25px;
         }
 
-        /* ---------- THE BUTTON ---------- */
         .free-button {
             display: inline-block;
             padding: 18px 40px;
             background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 24px;
-            font-weight: 800;
+            border-radius: 16px;
+            font-size: 22px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.25);
             position: relative;
             user-select: none;
             margin: 10px 0 5px 0;
+            font-family: 'Inter', sans-serif;
         }
 
         .free-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.35);
         }
 
         .free-button .small-text {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
-            opacity: 0.9;
-            margin-top: 3px;
+            opacity: 0.85;
+            margin-top: 4px;
         }
 
-        /* ---------- THE RUNNING BUTTON (EVIL MODE) ---------- */
         .free-button.evil {
             position: fixed;
             z-index: 999;
-            padding: 14px 30px;
+            padding: 14px 28px;
             font-size: 18px;
             background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
-            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.4);
             cursor: grab;
             transition: none;
             animation: pulseGlow 1s infinite;
+            border-radius: 14px;
         }
 
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 10px 40px rgba(255, 71, 87, 0.5); }
-            50% { box-shadow: 0 10px 60px rgba(255, 71, 87, 0.8); }
+            0%, 100% { box-shadow: 0 10px 40px rgba(255, 71, 87, 0.4); }
+            50% { box-shadow: 0 10px 60px rgba(255, 71, 87, 0.6); }
         }
 
         .free-button.evil:hover {
             transform: none;
-            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.4);
         }
 
-        /* ---------- TRAP MESSAGE ---------- */
         .trap-message {
             margin-top: 20px;
-            padding: 15px;
-            background: #fff3cd;
-            border-radius: 12px;
-            border-left: 4px solid #ffc107;
+            padding: 18px 20px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 14px;
+            border-left: 4px solid #ffd93d;
             display: none;
             animation: slideDown 0.5s ease-out;
+            border: 1px solid rgba(255, 193, 7, 0.1);
         }
 
         @keyframes slideDown {
@@ -189,92 +215,131 @@ $user_email = $_SESSION["user_email"];
         }
 
         .trap-message h3 {
-            color: #856404;
+            color: #ffd93d;
             font-size: 18px;
+            font-weight: 600;
         }
 
         .trap-message p {
-            color: #856404;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             margin-top: 5px;
+            font-weight: 300;
         }
 
-        /* ---------- BACK LINK ---------- */
         .back-link {
             display: inline-block;
             margin-top: 20px;
-            color: #4b6aff;
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 500;
+            font-size: 14px;
             padding: 10px 25px;
-            border: 2px solid #4b6aff;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
 
         .back-link:hover {
-            background: #4b6aff;
-            color: white;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
-        /* ---------- COUNTER ---------- */
         .click-counter {
             margin-top: 15px;
             font-size: 14px;
-            color: #999;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
         }
 
         .click-counter strong {
-            color: #ff4757;
+            color: #ff6b6b;
             font-size: 18px;
+            font-weight: 700;
         }
 
         .funny-messages {
             margin-top: 15px;
             font-size: 14px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.4);
             min-height: 25px;
             font-style: italic;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-weight: 300;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .funny-messages .highlight {
-            color: #ff4757;
-            font-weight: 600;
+        .footer-note {
+            margin-top: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.12);
+            font-weight: 300;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 25px;
+                border-radius: 20px;
+            }
+
+            .container h1 {
+                font-size: 26px;
+            }
+
+            .free-button {
+                padding: 14px 25px;
+                font-size: 18px;
+            }
+
+            .free-button .small-text {
+                font-size: 12px;
+            }
+
+            .free-button.evil {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+
     <div class="container">
         <span class="big-emoji">🎉</span>
         <h1>All Work for Free!</h1>
-        <p class="subtitle">click below! And Win offer </p>
+        <p class="subtitle">Click below and win the offer! 😈</p>
         
         <div class="user-badge">
             👤 <?php echo htmlspecialchars($user_email); ?>
         </div>
 
-        <!-- THE BUTTON -->
         <button class="free-button" id="freeButton" onclick="catchButton()">
             🎁 Get All Work Free
             <span class="small-text">✨ Limited Time Offer! ✨</span>
         </button>
 
-        <!-- Funny Messages -->
         <div class="funny-messages" id="funnyMessage">
             💡 Hover over the button... if you can! 😄
         </div>
 
-        <!-- Click Counter -->
         <div class="click-counter">
             Attempts: <strong id="clickCount">0</strong>
         </div>
 
-        <!-- TRAP MESSAGE -->
         <div class="trap-message" id="trapMessage">
             <span class="emoji">😂</span>
             <h3>YOU GOT PRANKED! 🤡</h3>
@@ -284,8 +349,8 @@ $user_email = $_SESSION["user_email"];
 
         <a href="dashboardS.php" class="back-link">← Back to Dashboard</a>
 
-        <div style="margin-top:15px; font-size:12px; color:#bbb;">
-            🔒 100% scam-free guarantee
+        <div class="footer-note">
+            🔒 100% scam-free guarantee (not really)
         </div>
     </div>
 
@@ -295,7 +360,6 @@ $user_email = $_SESSION["user_email"];
         let funnyMessage = document.getElementById('funnyMessage');
         let trapMessage = document.getElementById('trapMessage');
 
-        // Button hover - make it run away!
         button.addEventListener('mouseenter', function(e) {
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
@@ -356,7 +420,6 @@ $user_email = $_SESSION["user_email"];
                 }, 100);
             }
 
-            // Special surprise at 30 clicks
             if (clickCount >= 30) {
                 trapMessage.classList.add('show');
                 trapMessage.innerHTML = `
@@ -375,7 +438,6 @@ $user_email = $_SESSION["user_email"];
             }
         }
 
-        // Click on page moves button
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#freeButton') && !e.target.closest('.container')) {
                 if (button.classList.contains('evil')) {

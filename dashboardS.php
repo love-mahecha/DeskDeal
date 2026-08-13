@@ -1,13 +1,10 @@
 <?php
-
 session_start();
-
 
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
 }
-
 
 $user_email = $_SESSION["user_email"];
 ?>
@@ -17,71 +14,72 @@ $user_email = $_SESSION["user_email"];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - DeskDeal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #004d1a;
-            position: relative;
-            overflow: hidden;
+            background: #0a0a1a;
             padding: 20px;
         }
 
-        body::before {
-            content: '';
-            position: absolute;
-            width: 1200px;
-            height: 1200px;
-            top: -400px;
-            left: -300px;
-            border-radius: 45%;
-            background: linear-gradient(135deg, #00e676 0%, #00a844 70%);
-            z-index: 1;
-            animation: rotateWave 25s infinite linear;
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            pointer-events: none;
         }
 
-        body::after {
-            content: '';
-            position: absolute;
-            width: 1000px;
-            height: 1000px;
-            bottom: -300px;
-            right: -200px;
-            border-radius: 40%;
-            background: linear-gradient(135deg, #00c853 0%, #007e33 80%);
-            z-index: 1;
-            animation: rotateWave 20s infinite linear reverse;
+        .bg-blob-1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            left: -200px;
+            background: radial-gradient(circle, #6c5ce7, #00a844);
         }
 
-        @keyframes rotateWave {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .bg-blob-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, #00a844, #6c5ce7);
         }
 
-       
+        .bg-blob-3 {
+            width: 250px;
+            height: 250px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ff6b6b, #6c5ce7);
+            opacity: 0.1;
+        }
+
         .dashboard-container {
             position: relative;
             z-index: 10;
-            background: white;
-            padding: 35px 40px;
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 700px;
+            padding: 40px 45px;
         }
 
-       
         .header {
             display: flex;
             justify-content: space-between;
@@ -94,20 +92,21 @@ $user_email = $_SESSION["user_email"];
         .header .left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .header .left .emoji {
-            font-size: 40px;
+            font-size: 36px;
         }
 
         .header .left h1 {
             font-size: 26px;
-            color: #1a1a2e;
-        }
-
-        .header .left h1 span {
-            color: #00a844;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff, #a8a8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header .right {
@@ -117,92 +116,124 @@ $user_email = $_SESSION["user_email"];
         }
 
         .header .user-badge {
-            background: #e8f5e9;
-            color: #008736;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
             padding: 6px 16px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .header .logout-link {
-            color: #ff4b4b;
+            color: rgba(255, 71, 87, 0.7);
             text-decoration: none;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             padding: 6px 16px;
-            border: 2px solid #ff4b4b;
+            border: 1px solid rgba(255, 71, 87, 0.2);
             border-radius: 8px;
             transition: all 0.3s;
         }
 
         .header .logout-link:hover {
-            background: #ff4b4b;
-            color: white;
+            background: rgba(255, 71, 87, 0.15);
+            color: #ff6b6b;
+            border-color: rgba(255, 71, 87, 0.3);
         }
 
-       
         .welcome-text {
             font-size: 15px;
-            color: #555;
-            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 28px;
             text-align: center;
+            font-weight: 300;
         }
 
-        
         .role-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .btn-role {
-            padding: 25px 20px;
+            padding: 22px 20px;
             border: none;
-            border-radius: 15px;
-            font-size: 20px;
+            border-radius: 16px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
             color: white;
             text-decoration: none;
             text-align: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-role::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.6s;
+        }
+
+        .btn-role:hover::before {
+            left: 100%;
         }
 
         .btn-role:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-role:active {
+            transform: translateY(0) scale(0.98);
         }
 
         .btn-buyer {
             background: linear-gradient(135deg, #ff4b4b, #e63946);
+            box-shadow: 0 4px 20px rgba(255, 75, 75, 0.25);
+        }
+
+        .btn-buyer:hover {
+            box-shadow: 0 8px 30px rgba(255, 75, 75, 0.35);
         }
 
         .btn-worker {
             background: linear-gradient(135deg, #6c5ce7, #5a4bda);
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.25);
+        }
+
+        .btn-worker:hover {
+            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.35);
         }
 
         .btn-role .icon {
-            font-size: 28px;
+            font-size: 26px;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .btn-role small {
             display: block;
             font-weight: 400;
-            font-size: 13px;
-            opacity: 0.9;
+            font-size: 12px;
+            opacity: 0.85;
             margin-top: 4px;
         }
 
-        
         .quick-links {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .quick-link {
@@ -210,99 +241,83 @@ $user_email = $_SESSION["user_email"];
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px 10px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            padding: 11px 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            color: #1a1a2e;
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
             transition: all 0.3s;
-            border: 2px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'Inter', sans-serif;
         }
 
         .quick-link:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .quick-link.green {
-            border-color: #00a844;
-            color: #00a844;
-        }
-        .quick-link.green:hover {
-            background: #00a844;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
             color: white;
         }
 
-        .quick-link.purple {
-            border-color: #6c5ce7;
-            color: #6c5ce7;
-        }
-        .quick-link.purple:hover {
-            background: #6c5ce7;
-            color: white;
+        .quick-link .icon {
+            font-size: 16px;
         }
 
-        .quick-link.yellow {
-            border-color: #ffc107;
-            color: #856404;
-        }
-        .quick-link.yellow:hover {
-            background: #ffc107;
-            color: white;
-        }
+        .quick-link.green { border-color: rgba(0, 168, 68, 0.2); color: #6bcb77; }
+        .quick-link.green:hover { background: rgba(0, 168, 68, 0.1); border-color: rgba(0, 168, 68, 0.3); }
 
-        .quick-link.pink {
-            border-color: #fd79a8;
-            color: #e84393;
-        }
-        .quick-link.pink:hover {
-            background: #fd79a8;
-            color: white;
-        }
+        .quick-link.purple { border-color: rgba(108, 92, 231, 0.2); color: #a8a8ff; }
+        .quick-link.purple:hover { background: rgba(108, 92, 231, 0.1); border-color: rgba(108, 92, 231, 0.3); }
 
-        .quick-link.orange {
-            border-color: #fdcb6e;
-            color: #e17055;
-        }
-        .quick-link.orange:hover {
-            background: #fdcb6e;
-            color: white;
-        }
+        .quick-link.yellow { border-color: rgba(255, 193, 7, 0.2); color: #ffd93d; }
+        .quick-link.yellow:hover { background: rgba(255, 193, 7, 0.1); border-color: rgba(255, 193, 7, 0.3); }
 
-        
+        .quick-link.pink { border-color: rgba(253, 121, 168, 0.2); color: #fd79a8; }
+        .quick-link.pink:hover { background: rgba(253, 121, 168, 0.1); border-color: rgba(253, 121, 168, 0.3); }
+
+        .quick-link.orange { border-color: rgba(253, 203, 110, 0.2); color: #fdcb6e; }
+        .quick-link.orange:hover { background: rgba(253, 203, 110, 0.1); border-color: rgba(253, 203, 110, 0.3); }
+
         .free-work-link {
             display: block;
             text-align: center;
             padding: 12px;
-            color: #ff6b6b;
+            color: rgba(255, 107, 107, 0.6);
             text-decoration: none;
-            font-weight: 600;
-            border: 2px dashed #ff6b6b;
-            border-radius: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px dashed rgba(255, 107, 107, 0.2);
+            border-radius: 12px;
             transition: all 0.3s;
             margin-bottom: 20px;
         }
 
         .free-work-link:hover {
-            background: #fff5f5;
+            background: rgba(255, 107, 107, 0.05);
+            border-color: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
         }
 
-        
         .note {
             text-align: center;
-            font-size: 13px;
-            color: #999;
-            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 15px;
+            font-weight: 300;
         }
 
-        
+        .note strong {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 500;
+        }
+
         @media (max-width: 600px) {
             .dashboard-container {
                 padding: 25px 20px;
                 max-width: 100%;
+                border-radius: 20px;
             }
 
             .header {
@@ -332,17 +347,25 @@ $user_email = $_SESSION["user_email"];
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
+            .dashboard-container {
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+
     <div class="dashboard-container">
-        
+
         <div class="header">
             <div class="left">
                 <span class="emoji">🎓</span>
-                <h1>Desk<span>Deal</span></h1>
+                <h1>DeskDeal</h1>
             </div>
             <div class="right">
                 <span class="user-badge">👤 <?php echo htmlspecialchars($user_email); ?></span>
@@ -350,10 +373,8 @@ $user_email = $_SESSION["user_email"];
             </div>
         </div>
 
-        
         <p class="welcome-text">What would you like to do today?</p>
 
-       
         <div class="role-grid">
             <a href="buyerS.php" class="btn-role btn-buyer">
                 <span class="icon">📝</span>
@@ -367,23 +388,20 @@ $user_email = $_SESSION["user_email"];
             </a>
         </div>
 
-        
         <div class="quick-links">
-            <a href="my_requestsS.php" class="quick-link green">📋 My Requests</a>
-            <a href="my_applicationsS.php" class="quick-link purple">💼 My Applications</a>
-            <a href="email_logS.php" class="quick-link yellow">📧 Email Log</a>
-            <a href="feedbackS.php" class="quick-link pink">💬 Feedback</a>
-            <a href="completedS.php" class="quick-link orange">✅ Completed</a>
+            <a href="my_requestsS.php" class="quick-link green"><span class="icon">📋</span> My Requests</a>
+            <a href="my_applicationsS.php" class="quick-link purple"><span class="icon">💼</span> My Apps</a>
+            <a href="email_logS.php" class="quick-link yellow"><span class="icon">📧</span> Email Log</a>
+            <a href="feedbackS.php" class="quick-link pink"><span class="icon">💬</span> Feedback</a>
+            <a href="completedS.php" class="quick-link orange"><span class="icon">✅</span> Completed</a>
         </div>
 
-        
         <a href="freeWorkS.php" class="free-work-link">
-             Click here for free work!
+            🎉 Click here for free work! (Just kidding... maybe 😈)
         </a>
 
-        
         <p class="note">
-            💡 Choose your path: <strong>Get Work Done</strong> (hire help) or <strong>Do Work</strong> (earn money). Let's go! 
+            💡 Choose your path: <strong>Get Work Done</strong> (hire help) or <strong>Do Work</strong> (earn money). Let's go! 🚀
         </p>
     </div>
 

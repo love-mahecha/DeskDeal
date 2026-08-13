@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -12,7 +11,6 @@ $request_id = isset($_GET["request_id"]) ? intval($_GET["request_id"]) : 0;
 
 $success_message = "";
 $error_message = "";
-
 
 $request_subject = "";
 if ($request_id > 0) {
@@ -25,21 +23,17 @@ if ($request_id > 0) {
     }
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_file"])) {
     $request_id = intval($_POST["request_id"]);
     
-   
     if (isset($_FILES["assignment_file"]) && $_FILES["assignment_file"]["error"] == 0) {
         $file = $_FILES["assignment_file"];
         $file_name = $file["name"];
         $file_tmp = $file["tmp_name"];
         $file_size = $file["size"];
         
-      
         $allowed_extensions = ["pdf", "doc", "docx", "txt", "jpg", "jpeg", "png", "gif"];
         $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        
         
         $max_file_size = 5 * 1024 * 1024;
         
@@ -48,18 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_file"])) {
         } elseif ($file_size > $max_file_size) {
             $error_message = "❌ File is too large. Max size is 5MB.";
         } else {
-           
             $new_file_name = time() . "_" . preg_replace('/[^a-zA-Z0-9._-]/', '_', $user_email) . "_" . $file_name;
             $upload_path = "uploads/" . $new_file_name;
             
-           
             if (!is_dir("uploads")) {
                 mkdir("uploads", 0755, true);
             }
             
-            
             if (move_uploaded_file($file_tmp, $upload_path)) {
-                // Store file info in session
                 if (!isset($_SESSION["uploaded_files"])) {
                     $_SESSION["uploaded_files"] = [];
                 }
@@ -83,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_file"])) {
     }
 }
 
-
 $uploaded_files = [];
 if (isset($_SESSION["uploaded_files"])) {
     foreach ($_SESSION["uploaded_files"] as $file) {
@@ -99,93 +88,151 @@ if (isset($_SESSION["uploaded_files"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload File - DeskDeal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #004d1a, #00a844);
-            padding: 30px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #0a0a1a;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .bg-blob-1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            left: -200px;
+            background: radial-gradient(circle, #ff6b6b, #e63946);
+        }
+
+        .bg-blob-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            background: radial-gradient(circle, #6c5ce7, #ff6b6b);
+        }
+
+        .bg-blob-3 {
+            width: 250px;
+            height: 250px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ff4757, #6c5ce7);
+            opacity: 0.1;
         }
 
         .container {
+            position: relative;
+            z-index: 10;
             max-width: 600px;
             width: 100%;
         }
 
         .upload-card {
-            background: white;
-            padding: 35px 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 40px 45px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
         }
 
         .upload-card .back-link {
             display: inline-block;
-            color: #00a844;
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
 
         .upload-card .back-link:hover {
-            text-decoration: underline;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .upload-card h1 {
-            font-size: 24px;
-            color: #1a1a2e;
-            margin-bottom: 5px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
         }
 
         .upload-card .subtitle {
-            color: #666;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
+            font-weight: 300;
             margin-bottom: 20px;
         }
 
         .upload-card .user-badge {
             display: inline-block;
-            background: #e8f5e9;
-            color: #008736;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
             padding: 6px 18px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             margin-bottom: 20px;
         }
 
-       
         .request-context {
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin-bottom: 18px;
             font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .request-context.has-request {
-            background: #e8f5e9;
-            border-left: 4px solid #00a844;
-            color: #1a1a2e;
+            background: rgba(0, 168, 68, 0.08);
+            border-left: 4px solid #6bcb77;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .request-context.has-request strong {
+            color: #6bcb77;
+            font-weight: 600;
         }
 
         .request-context.no-request {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            color: #856404;
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid #ffd93d;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .request-context strong {
-            font-weight: 700;
+        .request-context.no-request strong {
+            color: #ffd93d;
+            font-weight: 600;
         }
 
         .form-group {
@@ -195,148 +242,168 @@ if (isset($_SESSION["uploaded_files"])) {
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
             margin-bottom: 5px;
+            letter-spacing: 0.3px;
         }
 
         .form-group label .required {
-            color: #e63946;
+            color: #ff6b6b;
         }
 
         .form-group input[type="file"] {
             width: 100%;
-            padding: 12px;
-            border: 2px dashed #ddd;
-            border-radius: 10px;
+            padding: 14px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
             font-size: 14px;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
             cursor: pointer;
-            background: #fafafa;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Inter', sans-serif;
         }
 
         .form-group input[type="file"]:hover {
-            border-color: #00a844;
-            background: #f0fdf4;
+            border-color: rgba(255, 107, 107, 0.3);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .form-group .file-hint {
             font-size: 12px;
-            color: #999;
+            color: rgba(255, 255, 255, 0.2);
             margin-top: 4px;
+            font-weight: 300;
         }
 
         .btn-upload {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00a844, #007e33);
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #e63946);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.25);
             margin-top: 5px;
         }
 
         .btn-upload:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 168, 68, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.35);
         }
 
         .btn-upload:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
         }
 
         .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px 15px;
-            border-radius: 10px;
+            background: rgba(40, 167, 69, 0.1);
+            color: #6bcb77;
+            padding: 12px 16px;
+            border-radius: 12px;
             margin-bottom: 15px;
-            font-weight: 600;
-            border-left: 4px solid #28a745;
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px solid rgba(40, 167, 69, 0.15);
         }
 
         .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 12px 15px;
-            border-radius: 10px;
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff6b6b;
+            padding: 12px 16px;
+            border-radius: 12px;
             margin-bottom: 15px;
-            font-weight: 600;
-            border-left: 4px solid #dc3545;
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px solid rgba(255, 71, 87, 0.1);
         }
 
-        /* Uploaded files list */
         .file-list {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px solid #eee;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .file-list h3 {
-            color: #1a1a2e;
-            font-size: 16px;
-            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 12px;
         }
 
         .file-item {
-            background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            border-radius: 12px;
             margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s;
+        }
+
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         .file-item .file-name {
             font-size: 14px;
-            color: #1a1a2e;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
         }
 
         .file-item .file-meta {
             font-size: 12px;
-            color: #999;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
         }
 
         .file-item .btn-download {
-            color: #00a844;
+            color: #6bcb77;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 13px;
-            padding: 4px 12px;
-            border: 1px solid #00a844;
-            border-radius: 6px;
+            padding: 4px 14px;
+            border: 1px solid rgba(107, 203, 119, 0.2);
+            border-radius: 8px;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
 
         .file-item .btn-download:hover {
-            background: #00a844;
-            color: white;
+            background: rgba(107, 203, 119, 0.1);
+            border-color: rgba(107, 203, 119, 0.3);
         }
 
         .no-files {
-            color: #999;
+            color: rgba(255, 255, 255, 0.2);
             font-size: 14px;
             font-style: italic;
             padding: 10px 0;
+            font-weight: 300;
         }
 
         .footer-note {
             margin-top: 20px;
             text-align: center;
-            color: #999;
-            font-size: 13px;
-            border-top: 1px solid #eee;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 15px;
+            font-weight: 300;
         }
 
         .file-size-info {
@@ -344,18 +411,46 @@ if (isset($_SESSION["uploaded_files"])) {
             gap: 15px;
             flex-wrap: wrap;
             font-size: 13px;
-            color: #666;
-            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 15px;
+            font-weight: 300;
         }
 
         .file-size-info span {
-            background: #f0fdf4;
-            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 14px;
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        @media (max-width: 600px) {
+            .upload-card {
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .upload-card h1 {
+                font-size: 24px;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .upload-card {
+                padding: 20px 15px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
 
     <div class="container">
         <div class="upload-card">
@@ -368,7 +463,6 @@ if (isset($_SESSION["uploaded_files"])) {
                 👤 <?php echo htmlspecialchars($user_email); ?>
             </div>
 
-           
             <?php if ($request_subject != "") { ?>
                 <div class="request-context has-request">
                     📚 Uploading for: <strong><?php echo htmlspecialchars($request_subject); ?></strong>
@@ -391,13 +485,11 @@ if (isset($_SESSION["uploaded_files"])) {
                 </div>
             <?php } ?>
 
-            
             <div class="file-size-info">
                 <span>📄 Max size: 5MB</span>
                 <span>📁 Allowed: PDF, DOC, DOCX, TXT, JPG, PNG, GIF</span>
             </div>
 
-            
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="request_id" value="<?php echo $request_id; ?>">
                 
@@ -412,7 +504,6 @@ if (isset($_SESSION["uploaded_files"])) {
                 </button>
             </form>
 
-            
             <div class="file-list">
                 <h3>📋 Uploaded Files (<?php echo count($uploaded_files); ?>)</h3>
                 
@@ -441,13 +532,12 @@ if (isset($_SESSION["uploaded_files"])) {
             </div>
 
             <div class="footer-note">
-                 Files are stored securely and can only be accessed by you.
+                🔒 Files are stored securely and can only be accessed by you.
             </div>
         </div>
     </div>
 
     <script>
-      
         document.getElementById('assignment_file').addEventListener('change', function(e) {
             const fileName = e.target.files[0]?.name || 'No file selected';
             const fileSize = e.target.files[0]?.size || 0;

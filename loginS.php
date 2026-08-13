@@ -1,17 +1,12 @@
 <?php 
-
 session_start();
-
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 
 $hardcoded_users = [
     "student@123" => "password123",
     "test@test.com" => "123456"
 ];
-
 
 $registered_users = [];
 if (isset($_SESSION["registered_users"])) {
@@ -20,27 +15,18 @@ if (isset($_SESSION["registered_users"])) {
     }
 }
 
-
 $users = array_merge($hardcoded_users, $registered_users);
-
-
 $error = "";
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
     
-   
     if (array_key_exists($email, $users) && $users[$email] == $password) {
-       
         $_SESSION["user_email"] = $email;
-        
-        
         header("Location: dashboardS.php");
         exit();
     } else {
-       
         $error = "Invalid email or password. Please try again.";
     }
 }
@@ -51,174 +37,214 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeskDeal - Student Work Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #004d1a;
+            background: #0a0a1a;
             position: relative;
-            overflow: hidden;
         }
 
-        
         body::before {
             content: '';
-            position: absolute;
-            width: 1200px;
-            height: 1200px;
-            top: -400px;
-            left: -300px;
-            border-radius: 45%;
-            background: linear-gradient(135deg, #00e676 0%, #00a844 70%);
-            z-index: 1;
-            animation: rotateWave 25s infinite linear;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80') center/cover no-repeat;
+            z-index: 0;
         }
 
-        
         body::after {
             content: '';
-            position: absolute;
-            width: 1000px;
-            height: 1000px;
-            bottom: -300px;
-            right: -200px;
-            border-radius: 40%;
-            background: linear-gradient(135deg, #00c853 0%, #007e33 80%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, 
+                rgba(10, 10, 26, 0.2) 0%, 
+                rgba(10, 10, 26, 0.5) 50%,
+                rgba(10, 10, 26, 0.85) 100%
+            );
             z-index: 1;
-            animation: rotateWave 20s infinite linear reverse;
         }
 
-        @keyframes rotateWave {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-       
-        .main-container {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 950px;
-            overflow: hidden;
-            min-height: 550px;
-        }
-
-        
-        .about-section {
-            flex: 1;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 45px 35px;
-            color: white;
+        .left-section {
+            flex: 1.2;
+            padding: 60px 70px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            z-index: 2;
+            color: white;
+            min-height: 100vh;
         }
 
-        .about-section .logo-area {
-            margin-bottom: 25px;
-        }
-
-        .about-section .logo-area .logo-icon {
-            font-size: 45px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .about-section .logo-area h1 {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .about-section .logo-area h1 span {
-            color: #00e676;
-        }
-
-        .about-section .logo-area .tagline {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 3px;
-        }
-
-        .about-section .divider-line {
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #00e676, #4b6aff);
-            border-radius: 2px;
-            margin: 20px 0;
-        }
-
-        .about-section .about-text {
-            font-size: 15px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 20px;
-        }
-
-        .about-section .about-text strong {
-            color: #00e676;
-        }
-
-        .about-section .features {
-            list-style: none;
-            padding: 0;
-        }
-
-        .about-section .features li {
-            padding: 6px 0;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
+        .left-section .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 50px;
         }
 
-        .about-section .features li .icon {
-            font-size: 18px;
+        .left-section .brand .logo {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .about-section .footer-text {
-            margin-top: 25px;
+        .left-section .brand h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .left-section .brand h2 span {
+            color: #a8a8ff;
+        }
+
+        .left-section .hero h1 {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: white;
+            letter-spacing: -2px;
+            max-width: 520px;
+        }
+
+        .left-section .hero h1 span {
+            background: linear-gradient(135deg, #a8a8ff, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .left-section .hero .cta-tag {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .left-section .hero p {
+            margin-top: 20px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            max-width: 420px;
+            font-weight: 300;
+        }
+
+        .left-section .impact-badge {
+            margin-top: 30px;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 8px 22px;
+            border-radius: 30px;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.4);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: fit-content;
         }
 
-        
-        .login-section {
-            flex: 1;
-            padding: 45px 40px;
+        .left-section .impact-badge strong {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .left-section .vps-link {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .left-section .vps-link:hover {
+            color: rgba(255, 255, 255, 0.85);
+            gap: 12px;
+        }
+
+        .left-section .vps-link .arrow {
+            font-size: 18px;
+            transition: all 0.3s;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .left-section .vps-link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .left-section .footer-text {
+            margin-top: 60px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .right-section {
+            width: 440px;
+            padding: 60px 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 2;
         }
 
-        .login-section h2 {
-            font-size: 26px;
-            color: #1a1a2e;
-            margin-bottom: 5px;
+        .right-section .welcome-text {
+            margin-bottom: 30px;
         }
 
-        .login-section .subtitle {
-            color: #666;
+        .right-section .welcome-text h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .right-section .welcome-text p {
             font-size: 14px;
-            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 4px;
+            font-weight: 300;
         }
 
         .form-group {
@@ -228,234 +254,330 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 5px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
+            padding: 13px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            font-size: 15px;
-            transition: border-color 0.3s;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.04);
+            color: white;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 300;
         }
 
         .form-group input:focus {
-            outline: none;
-            border-color: #00a844;
+            border-color: rgba(108, 92, 231, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.04);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 6px 0 20px 0;
+        }
+
+        .form-options .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-options .remember input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #6c5ce7;
+            cursor: pointer;
+        }
+
+        .form-options .forgot-link {
+            font-size: 13px;
+            color: #a8a8ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .form-options .forgot-link:hover {
+            color: #c8c8ff;
         }
 
         .btn-login {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #00a844, #007e33);
+            background: linear-gradient(135deg, #6c5ce7, #5a4bda);
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 5px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.25);
         }
 
         .btn-login:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 168, 68, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.35);
+        }
+
+        .btn-login:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            gap: 16px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .divider span {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 300;
         }
 
         .btn-register {
             width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: #00a844;
-            border: 2px solid #00a844;
+            padding: 13px;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: block;
+            text-align: center;
         }
 
         .btn-register:hover {
-            background: #00a844;
-            color: white;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .error-message {
-            background: #ffe0e0;
-            color: #d63031;
-            padding: 10px;
+            background: rgba(220, 38, 38, 0.1);
+            color: #ef4444;
+            padding: 10px 14px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-       
-        .forgot-link {
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .forgot-link a {
-            color: #00a844;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .forgot-link a:hover {
-            color: #007e33;
-            text-decoration: underline;
-        }
-
-        .signup-prompt {
-            margin-top: 10px;
-            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 500;
             font-size: 13px;
-            color: #999;
-        }
-
-        .signup-prompt a {
-            color: #00a844;
-            font-weight: 600;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .signup-prompt a:hover {
-            color: #007e33;
-            text-decoration: underline;
+            border: 1px solid rgba(220, 38, 38, 0.1);
         }
 
         .trust-badges {
-            margin-top: 15px;
+            margin-top: 25px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 24px;
             font-size: 12px;
-            color: #bbb;
+            color: rgba(255, 255, 255, 0.15);
         }
 
         .trust-badges span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+            transition: all 0.3s;
         }
 
-      
+        .trust-badges span:hover {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        @media (max-width: 1024px) {
+            .left-section {
+                padding: 40px 50px;
+            }
+
+            .left-section .hero h1 {
+                font-size: 38px;
+            }
+
+            .right-section {
+                width: 380px;
+                padding: 40px 35px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .main-container {
+            body {
                 flex-direction: column;
-                max-width: 400px;
-                border-radius: 15px;
             }
 
-            .about-section {
+            body::before {
+                background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80') center/cover no-repeat;
+            }
+
+            .left-section {
                 padding: 30px 25px;
-                border-radius: 15px 15px 0 0;
+                min-height: 50vh;
+                justify-content: center;
             }
 
-            .login-section {
-                padding: 30px 25px;
-            }
-
-            .about-section .logo-area h1 {
+            .left-section .hero h1 {
                 font-size: 28px;
+                max-width: 100%;
+            }
+
+            .left-section .hero p {
+                max-width: 100%;
+            }
+
+            .left-section .footer-text {
+                margin-top: 30px;
+            }
+
+            .right-section {
+                width: 100%;
+                padding: 30px 25px;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+                backdrop-filter: blur(20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left-section .hero h1 {
+                font-size: 22px;
+            }
+
+            .left-section .brand h2 {
+                font-size: 18px;
+            }
+
+            .right-section {
+                padding: 25px 20px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
             }
 
             .trust-badges {
                 gap: 12px;
                 flex-wrap: wrap;
             }
+
+            .left-section .impact-badge {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-       
-        <div class="about-section">
-            <div class="logo-area">
-                <span class="logo-icon">📚</span>
-                <h1>Desk<span>Deal</span></h1>
-                <p class="tagline">Student Work Marketplace</p>
-            </div>
-
-            <div class="divider-line"></div>
-
-            <p class="about-text">
-                Welcome to <strong>DeskDeal</strong> — your go-to platform for students to 
-                <strong>get help</strong> with assignments or <strong>earn money</strong> 
-                by helping others. Whether you need a hand with homework or want to put 
-                your skills to work, DeskDeal connects students just like you.
-            </p>
-
-            <ul class="features">
-                <li><span class="icon">📝</span> Post your homework requests</li>
-                <li><span class="icon">💰</span> Set your price per page</li>
-                <li><span class="icon">💼</span> Apply to work on assignments</li>
-                <li><span class="icon">🎉</span> Earn while you learn</li>
-            </ul>
-
-            <div class="footer-text">
-                © 2026 DeskDeal • Built for students
-            </div>
+    <!-- ===== LEFT SIDE ===== -->
+    <div class="left-section">
+        <div class="brand">
+            <div class="logo">D</div>
+            <h2>Desk<span>Deal</span></h2>
         </div>
 
-       
-        <div class="login-section">
-            <h2>Welcome Back!</h2>
-            <p class="subtitle">Login to start earning or getting help</p>
-            
-            <?php if ($error != "") { ?>
-                <div class="error-message">
-                    <?php echo $error; ?>
-                </div>
-            <?php } ?>
-            
-           
-            <form action="" method="POST">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
+        <div class="hero">
+            <h1><span>Student Learning</span> Made Simple</h1>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
+            <span class="cta-tag">GET HELP OR EARN</span>
 
-                <button type="submit" name="login" class="btn-login">🔑 Login</button>
-            </form>
+            <p>
+                Need help with homework? Or want to earn money by helping others? 
+                DeskDeal connects students to collaborate, learn, and earn together.
+            </p>
+        </div>
 
-            
-            <a href="registerS.php" class="btn-register" style="text-decoration: none; display: block; text-align: center;">
-                📝 Create New Account
-            </a>
+        <div class="impact-badge">
+            <strong>Post Tasks</strong> • <strong> Find Help</strong> • <strong> Earn Money</strong>
+        </div>
 
-          
-            <div class="forgot-link">
-                <a href="#">🔑 Forgot Password?</a>
+        <a href="#" class="vps-link">
+            Post a Request • Apply for Work • Earn Money
+            <span class="arrow">→</span>
+        </a>
+
+        <div class="footer-text">
+           © 2026 DeskDeal • Built for Students
+        </div>
+    </div>
+
+    <!-- ===== RIGHT SIDE ===== -->
+    <div class="right-section">
+        <div class="welcome-text">
+            <h2>Welcome Back</h2>
+            <p>Login to continue your learning journey</p>
+        </div>
+
+        <?php if ($error != "") { ?>
+            <div class="error-message">
+                <?php echo $error; ?>
+            </div>
+        <?php } ?>
+
+        <form action="" method="POST">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="student@deskdeal.com" required>
             </div>
 
-            
-            <div class="signup-prompt">
-                Don't have an account? <a href="registerS.php" style="color: #00a844; font-weight: 600; text-decoration: none;">Sign Up</a>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
             </div>
 
-            
-            <div class="trust-badges">
-                <span>🔒 Secure</span>
-                <span>🛡️ Private</span>
-                <span>✅ Safe</span>
+            <div class="form-options">
+                <label class="remember">
+                    <input type="checkbox" checked> Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
             </div>
 
+            <button type="submit" name="login" class="btn-login">Sign In</button>
+        </form>
+
+        <div class="divider">
+            <span>or continue with</span>
+        </div>
+
+        <a href="registerS.php" class="btn-register">Create New Account</a>
+
+        <div class="trust-badges">
+            <span>Secure</span>
+            <span>Student Friendly</span>
+            <span>Trusted Community</span>
         </div>
     </div>
 
