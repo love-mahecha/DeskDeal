@@ -1,0 +1,38 @@
+# Ignore session files
+sess_*
+*.session
+
+# Ignore uploaded files
+uploads/*.pdf
+uploads/*.doc
+uploads/*.docx
+uploads/*.txt
+uploads/*.jpg
+uploads/*.jpeg
+uploads/*.png
+uploads/*.gif
+
+# Keep .htaccess but ignore uploaded files
+!uploads/.htaccess
+
+# Ignore backup files
+*.save
+*.bak
+*.swp
+*.backup
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+error_log
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore temporary files
+*.tmp
+*.temp

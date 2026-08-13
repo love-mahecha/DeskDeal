@@ -1,0 +1,14 @@
+# Prevent directory listing
+Options -Indexes
+
+# Allow only specific file types
+<FilesMatch "\.(pdf|doc|docx|txt|jpg|jpeg|png|gif)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Block PHP, HTML, and other script files
+<FilesMatch "\.(php|html|htm|js|css|sql|sh)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
