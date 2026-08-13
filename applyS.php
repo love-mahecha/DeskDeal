@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -10,10 +10,9 @@ if (!isset($_SESSION["user_email"])) {
 $user_email = $_SESSION["user_email"];
 $request_id = isset($_GET["request_id"]) ? intval($_GET["request_id"]) : 0;
 
-// Get all requests from session
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 
-// Find the specific request
+
 $selected_request = null;
 foreach ($requests as $req) {
     if ($req["id"] == $request_id) {
@@ -22,16 +21,15 @@ foreach ($requests as $req) {
     }
 }
 
-// If request not found or already completed
+
 if (!$selected_request) {
     header("Location: workerS.php");
     exit();
 }
 
-// ===== CONFLICT CHECK =====
-// Check if request is already "applied" or "completed"
+
 if ($selected_request["status"] == "applied" || $selected_request["status"] == "completed") {
-    // Check if this worker already applied
+    
     $already_applied = false;
     if (isset($_SESSION["applications"])) {
         foreach ($_SESSION["applications"] as $app) {
@@ -43,13 +41,13 @@ if ($selected_request["status"] == "applied" || $selected_request["status"] == "
     }
     
     if (!$already_applied) {
-        // Redirect with error message
+        
         header("Location: workerS.php?error=taken");
         exit();
     }
 }
 
-// Check if this worker already applied to this request
+
 if (isset($_SESSION["applications"])) {
     foreach ($_SESSION["applications"] as $app) {
         if ($app["request_id"] == $request_id && $app["worker_email"] == $user_email) {
@@ -62,19 +60,19 @@ if (isset($_SESSION["applications"])) {
 $error_message = "";
 $success_message = "";
 
-// Handle application submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"])) {
     $price_per_page = floatval($_POST["price_per_page"]);
     $duration = htmlspecialchars($_POST["duration"]);
     $notes = htmlspecialchars($_POST["notes"]);
     
-    // Validate
+    
     if ($price_per_page <= 0) {
         $error_message = "❌ Please enter a valid price (greater than 0).";
     } elseif (empty($duration)) {
         $error_message = "❌ Please enter the duration needed.";
     } else {
-        // ===== DOUBLE CHECK: Request might have been taken while filling form =====
+        
         $current_requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
         $current_request = null;
         foreach ($current_requests as $req) {
@@ -85,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
         }
         
         if ($current_request["status"] == "applied" || $current_request["status"] == "completed") {
-            // Check if this worker already applied
+           
             $already_applied = false;
             if (isset($_SESSION["applications"])) {
                 foreach ($_SESSION["applications"] as $app) {
@@ -102,12 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
         }
         
         if ($error_message == "") {
-            // Initialize applications array in session if not exists
+            
             if (!isset($_SESSION["applications"])) {
                 $_SESSION["applications"] = [];
             }
             
-            // Create application
+            
             $application = [
                 "request_id" => $selected_request["id"],
                 "request_subject" => $selected_request["subject"],
@@ -120,10 +118,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
                 "applied_at" => date("Y-m-d H:i:s")
             ];
             
-            // Add to session
+          
             $_SESSION["applications"][] = $application;
             
-            // Mark the request as "applied" so it doesn't show to other workers
+           
             foreach ($_SESSION["requests"] as &$req) {
                 if ($req["id"] == $selected_request["id"]) {
                     $req["status"] = "applied";
@@ -131,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
                 }
             }
             
-            // Redirect with success
+            
             header("Location: workerS.php?applied=success");
             exit();
         }
@@ -343,7 +341,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
             <h1>💰 Apply for Work</h1>
             <p class="subtitle">Set your price and timeline for this assignment</p>
 
-            <!-- REQUEST SUMMARY -->
+            
             <div class="request-summary">
                 <h3>📋 Assignment Details</h3>
                 <div class="row">
@@ -376,7 +374,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
                 </div>
             <?php } ?>
 
-            <!-- APPLICATION FORM -->
+           
             <?php if ($selected_request["status"] != "applied" && $selected_request["status"] != "completed") { ?>
                 <form action="" method="POST">
                     <div class="form-group">
@@ -417,7 +415,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
     </div>
 
     <script>
-        // Live total price calculation
+        
         document.getElementById('price_per_page').addEventListener('input', function() {
             const price = parseFloat(this.value) || 0;
             const pages = <?php echo $selected_request["pages"]; ?>;

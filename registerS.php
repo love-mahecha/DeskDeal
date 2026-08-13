@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If already logged in, redirect to dashboard
+
 if (isset($_SESSION["user_email"])) {
     header("Location: dashboardS.php");
     exit();
@@ -10,14 +10,14 @@ if (isset($_SESSION["user_email"])) {
 $error = "";
 $success = "";
 
-// Handle registration
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
     $confirm_password = trim($_POST["confirm_password"]);
     $fullname = trim($_POST["fullname"]);
     
-    // Validation
+   
     if (empty($email) || empty($password) || empty($confirm_password) || empty($fullname)) {
         $error = "❌ Please fill in all fields.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     } elseif ($password !== $confirm_password) {
         $error = "❌ Passwords do not match.";
     } else {
-        // Check if user already exists
+        
         $user_exists = false;
         if (isset($_SESSION["registered_users"])) {
             foreach ($_SESSION["registered_users"] as $user) {
@@ -41,14 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
         if ($user_exists) {
             $error = "❌ This email is already registered. Please login.";
         } else {
-            // Add user to session (in a real app, save to database)
+            
             if (!isset($_SESSION["registered_users"])) {
                 $_SESSION["registered_users"] = [];
             }
             
             $_SESSION["registered_users"][] = [
                 "email" => $email,
-                "password" => $password, // In real app, use password_hash()
+                "password" => $password,
                 "fullname" => $fullname,
                 "registered_at" => date("Y-m-d H:i:s")
             ];
@@ -329,7 +329,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
         .password-strength .bar.medium { background: #ffd93d; }
         .password-strength .bar.strong { background: #6bcb77; }
 
-        /* ---------- RESPONSIVE ---------- */
+        
         @media (max-width: 480px) {
             .register-container {
                 padding: 30px 20px;
@@ -404,14 +404,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     </div>
 
     <script>
-        // Password strength indicator
+        
         document.getElementById('password').addEventListener('input', function() {
             const password = this.value;
             const bar1 = document.getElementById('bar1');
             const bar2 = document.getElementById('bar2');
             const bar3 = document.getElementById('bar3');
 
-            // Reset bars
+            
             bar1.className = 'bar';
             bar2.className = 'bar';
             bar3.className = 'bar';

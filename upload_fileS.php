@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -13,7 +13,7 @@ $request_id = isset($_GET["request_id"]) ? intval($_GET["request_id"]) : 0;
 $success_message = "";
 $error_message = "";
 
-// Get request details if request_id is provided
+
 $request_subject = "";
 if ($request_id > 0) {
     $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
@@ -25,39 +25,39 @@ if ($request_id > 0) {
     }
 }
 
-// Handle file upload
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_file"])) {
     $request_id = intval($_POST["request_id"]);
     
-    // Check if file was uploaded
+   
     if (isset($_FILES["assignment_file"]) && $_FILES["assignment_file"]["error"] == 0) {
         $file = $_FILES["assignment_file"];
         $file_name = $file["name"];
         $file_tmp = $file["tmp_name"];
         $file_size = $file["size"];
         
-        // File validation
+      
         $allowed_extensions = ["pdf", "doc", "docx", "txt", "jpg", "jpeg", "png", "gif"];
         $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
         
-        // Max file size: 5MB
-        $max_file_size = 5 * 1024 * 1024; // 5MB
+        
+        $max_file_size = 5 * 1024 * 1024;
         
         if (!in_array($file_extension, $allowed_extensions)) {
             $error_message = "❌ Invalid file type. Allowed: PDF, DOC, DOCX, TXT, JPG, PNG, GIF";
         } elseif ($file_size > $max_file_size) {
             $error_message = "❌ File is too large. Max size is 5MB.";
         } else {
-            // Create unique file name
+           
             $new_file_name = time() . "_" . preg_replace('/[^a-zA-Z0-9._-]/', '_', $user_email) . "_" . $file_name;
             $upload_path = "uploads/" . $new_file_name;
             
-            // Make sure uploads folder exists
+           
             if (!is_dir("uploads")) {
                 mkdir("uploads", 0755, true);
             }
             
-            // Move file to uploads folder
+            
             if (move_uploaded_file($file_tmp, $upload_path)) {
                 // Store file info in session
                 if (!isset($_SESSION["uploaded_files"])) {
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_file"])) {
     }
 }
 
-// Get uploaded files for this request
+
 $uploaded_files = [];
 if (isset($_SESSION["uploaded_files"])) {
     foreach ($_SESSION["uploaded_files"] as $file) {
@@ -164,7 +164,7 @@ if (isset($_SESSION["uploaded_files"])) {
             margin-bottom: 20px;
         }
 
-        /* ===== REQUEST CONTEXT BOX ===== */
+       
         .request-context {
             padding: 10px 15px;
             border-radius: 10px;
@@ -368,7 +368,7 @@ if (isset($_SESSION["uploaded_files"])) {
                 👤 <?php echo htmlspecialchars($user_email); ?>
             </div>
 
-            <!-- ===== REQUEST CONTEXT ===== -->
+           
             <?php if ($request_subject != "") { ?>
                 <div class="request-context has-request">
                     📚 Uploading for: <strong><?php echo htmlspecialchars($request_subject); ?></strong>
@@ -391,13 +391,13 @@ if (isset($_SESSION["uploaded_files"])) {
                 </div>
             <?php } ?>
 
-            <!-- File size info -->
+            
             <div class="file-size-info">
                 <span>📄 Max size: 5MB</span>
                 <span>📁 Allowed: PDF, DOC, DOCX, TXT, JPG, PNG, GIF</span>
             </div>
 
-            <!-- Upload Form -->
+            
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="request_id" value="<?php echo $request_id; ?>">
                 
@@ -412,7 +412,7 @@ if (isset($_SESSION["uploaded_files"])) {
                 </button>
             </form>
 
-            <!-- Uploaded Files List -->
+            
             <div class="file-list">
                 <h3>📋 Uploaded Files (<?php echo count($uploaded_files); ?>)</h3>
                 
@@ -441,17 +441,17 @@ if (isset($_SESSION["uploaded_files"])) {
             </div>
 
             <div class="footer-note">
-                🔒 Files are stored securely and can only be accessed by you.
+                 Files are stored securely and can only be accessed by you.
             </div>
         </div>
     </div>
 
     <script>
-        // Show file name when selected
+      
         document.getElementById('assignment_file').addEventListener('change', function(e) {
             const fileName = e.target.files[0]?.name || 'No file selected';
             const fileSize = e.target.files[0]?.size || 0;
-            const maxSize = 5 * 1024 * 1024; // 5MB
+            const maxSize = 5 * 1024 * 1024;
             
             if (fileSize > maxSize) {
                 alert('⚠️ File is too large! Maximum size is 5MB.');

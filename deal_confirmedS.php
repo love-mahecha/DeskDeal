@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -16,7 +16,7 @@ if ($request_id == 0 || $worker_email == "") {
     exit();
 }
 
-// Get request details
+
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 $applications = isset($_SESSION["applications"]) ? $_SESSION["applications"] : [];
 
@@ -66,7 +66,7 @@ if (!$request || !$application) {
             overflow: hidden;
         }
 
-        /* Wave background */
+       
         body::before {
             content: '';
             position: absolute;
@@ -155,7 +155,7 @@ if (!$request || !$application) {
             margin-bottom: 20px;
         }
 
-        /* ---------- DEAL DETAILS ---------- */
+        
         .deal-details {
             background: #f8f9fa;
             border-radius: 15px;
@@ -256,7 +256,7 @@ if (!$request || !$application) {
             margin: 5px 0;
         }
 
-        /* ---------- RESPONSIVE ---------- */
+        
         @media (max-width: 480px) {
             .confirmed-container {
                 padding: 30px 20px;
@@ -322,7 +322,7 @@ if (!$request || !$application) {
         <div class="divider-line"></div>
 
         <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
-            ✅ The worker will now work on your assignment. 
+            The worker will now work on your assignment. 
             <br>You can contact them via email.
         </p>
 
@@ -331,7 +331,7 @@ if (!$request || !$application) {
         <a href="my_requestsS.php" class="btn-view-requests">📋 View All My Requests</a>
 
         <p class="note">
-            🔒 This deal is confirmed. Worker status has been updated to "Accepted".
+             This deal is confirmedjhuj. Worker status has been updated to "Accepted".
         </p>
     </div>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -17,7 +17,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Log - DeskDeal</title>
     <style>
-        /* ===== RESET & BASE ===== */
+        
         * {
             margin: 0;
             padding: 0;
@@ -25,20 +25,20 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* ===== BODY ===== */
+        
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #004d1a, #00a844);
             padding: 30px 20px;
         }
 
-        /* ===== CONTAINER ===== */
+       
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
 
-        /* ===== HEADER ===== */
+       
         .header {
             background: white;
             padding: 20px 30px;
@@ -97,7 +97,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             color: white;
         }
 
-        /* ===== STATS ===== */
+        
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -124,7 +124,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             color: #666;
         }
 
-        /* ===== EMAIL CARDS ===== */
+        
         .email-card {
             background: white;
             padding: 20px 25px;
@@ -139,7 +139,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             transform: translateX(5px);
         }
 
-        /* Different border colors for different types */
+       
         .email-card.type-apply {
             border-left-color: #ffc107;
         }
@@ -156,7 +156,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             border-left-color: #17a2b8;
         }
 
-        /* Email Subject */
+       
         .email-card .subject {
             font-size: 16px;
             font-weight: 700;
@@ -164,7 +164,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             margin-bottom: 3px;
         }
 
-        /* Email "To" field */
+    
         .email-card .to {
             font-size: 14px;
             color: #666;
@@ -175,7 +175,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             color: #1a1a2e;
         }
 
-        /* Email Message Body */
+        
         .email-card .message {
             font-size: 14px;
             color: #444;
@@ -188,7 +188,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             word-wrap: break-word;
         }
 
-        /* Email Time */
+        
         .email-card .time {
             font-size: 12px;
             color: #999;
@@ -196,7 +196,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             text-align: right;
         }
 
-        /* ===== NO EMAILS ===== */
+       
         .no-emails {
             background: white;
             padding: 50px 30px;
@@ -221,7 +221,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             font-size: 15px;
         }
 
-        /* ===== FOOTER ===== */
+        
         .footer {
             margin-top: 30px;
             text-align: center;
@@ -229,7 +229,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             font-size: 14px;
         }
 
-        /* ===== BUTTONS ===== */
+        
         .btn-clear {
             background: #dc3545;
             color: white;
@@ -245,7 +245,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             background: #c82333;
         }
 
-        /* ===== RESPONSIVE ===== */
+       
         @media (max-width: 600px) {
             .header {
                 flex-direction: column;
@@ -275,7 +275,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
 <body>
 
     <div class="container">
-        <!-- ===== HEADER ===== -->
+        
         <div class="header">
             <div class="left">
                 <h1>📧 Email <span>Log</span></h1>
@@ -287,7 +287,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             </div>
         </div>
 
-        <!-- ===== STATS ===== -->
+      
         <div class="stats">
             <div class="stat-card">
                 <div class="number"><?php echo count($emails); ?></div>
@@ -305,7 +305,7 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             </div>
         </div>
 
-        <!-- ===== EMAIL LIST ===== -->
+       
         <?php if (count($emails) > 0) { ?>
             <?php foreach (array_reverse($emails) as $email) { 
                 // Determine email type for styling
@@ -338,9 +338,9 @@ $emails = isset($_SESSION["email_log"]) ? $_SESSION["email_log"] : [];
             </div>
         <?php } ?>
 
-        <!-- ===== FOOTER ===== -->
+       
         <div class="footer">
-            🔒 Emails are stored in your session and will be cleared when you logout.
+             Emails are stored in your session and will be cleared when you logout.
         </div>
     </div>
 

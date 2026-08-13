@@ -1,18 +1,18 @@
 <?php 
-// Starting the session so I can remember the logged-in user
+
 session_start();
 
-// Enable error reporting (remove after testing)
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// HARDCODED USERS (for demo)
+
 $hardcoded_users = [
     "student@123" => "password123",
     "test@test.com" => "123456"
 ];
 
-// Get registered users from session
+
 $registered_users = [];
 if (isset($_SESSION["registered_users"])) {
     foreach ($_SESSION["registered_users"] as $user) {
@@ -20,27 +20,27 @@ if (isset($_SESSION["registered_users"])) {
     }
 }
 
-// MERGE both arrays (hardcoded + registered)
+
 $users = array_merge($hardcoded_users, $registered_users);
 
-// Variable to store error
+
 $error = "";
 
-// Checking if login is submitted 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
     
-    // Checking if the email exists in our "database" AND the password matches
+   
     if (array_key_exists($email, $users) && $users[$email] == $password) {
-        // SUCCESS: Save email in session and redirect to Dashboard
+       
         $_SESSION["user_email"] = $email;
         
-        // Redirect to dashboard
+        
         header("Location: dashboardS.php");
         exit();
     } else {
-        // FAILURE: Set an error message
+       
         $error = "Invalid email or password. Please try again.";
     }
 }
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* ---------- WAVE BACKGROUND ---------- */
+        
         body {
             min-height: 100vh;
             display: flex;
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             overflow: hidden;
         }
 
-        /* Wave 1 */
+        
         body::before {
             content: '';
             position: absolute;
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             animation: rotateWave 25s infinite linear;
         }
 
-        /* Wave 2 */
+        
         body::after {
             content: '';
             position: absolute;
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             to { transform: rotate(360deg); }
         }
 
-        /* ---------- MAIN CONTAINER ---------- */
+       
         .main-container {
             position: relative;
             z-index: 10;
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             min-height: 550px;
         }
 
-        /* ---------- LEFT SIDE: ABOUT SECTION ---------- */
+        
         .about-section {
             flex: 1;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             padding-top: 15px;
         }
 
-        /* ---------- RIGHT SIDE: LOGIN FORM ---------- */
+        
         .login-section {
             flex: 1;
             padding: 45px 40px;
@@ -295,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             font-weight: 600;
         }
 
-        /* ---------- NEW FEATURES STYLES ---------- */
+       
         .forgot-link {
             margin-top: 15px;
             text-align: center;
@@ -348,7 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             gap: 4px;
         }
 
-        /* ---------- RESPONSIVE ---------- */
+      
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -379,7 +379,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
 <body>
 
     <div class="main-container">
-        <!-- LEFT SIDE: ABOUT -->
+       
         <div class="about-section">
             <div class="logo-area">
                 <span class="logo-icon">📚</span>
@@ -404,11 +404,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             </ul>
 
             <div class="footer-text">
-                © 2026 DeskDeal • Built with ❤️ for students
+                © 2026 DeskDeal • Built for students
             </div>
         </div>
 
-        <!-- RIGHT SIDE: LOGIN -->
+       
         <div class="login-section">
             <h2>Welcome Back!</h2>
             <p class="subtitle">Login to start earning or getting help</p>
@@ -419,7 +419,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                 </div>
             <?php } ?>
             
-            <!-- Login form -->
+           
             <form action="" method="POST">
                 <div class="form-group">
                     <label for="email">Email Address</label>
@@ -434,22 +434,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                 <button type="submit" name="login" class="btn-login">🔑 Login</button>
             </form>
 
-            <!-- REGISTER BUTTON -->
+            
             <a href="registerS.php" class="btn-register" style="text-decoration: none; display: block; text-align: center;">
                 📝 Create New Account
             </a>
 
-            <!-- NEW: Forgot Password Link -->
+          
             <div class="forgot-link">
                 <a href="#">🔑 Forgot Password?</a>
             </div>
 
-            <!-- NEW: Sign Up Prompt -->
+            
             <div class="signup-prompt">
                 Don't have an account? <a href="registerS.php" style="color: #00a844; font-weight: 600; text-decoration: none;">Sign Up</a>
             </div>
 
-            <!-- NEW: Trust Badges -->
+            
             <div class="trust-badges">
                 <span>🔒 Secure</span>
                 <span>🛡️ Private</span>

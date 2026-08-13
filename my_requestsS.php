@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -9,16 +9,16 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Get all requests from session
+
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 $applications = isset($_SESSION["applications"]) ? $_SESSION["applications"] : [];
 
-// Filter requests made by this buyer
+
 $my_requests = array_filter($requests, function($req) use ($user_email) {
     return $req["buyer_email"] == $user_email;
 });
 
-// Get applications for a specific request
+
 function getApplicationsForRequest($request_id, $applications) {
     $result = [];
     foreach ($applications as $app) {
@@ -29,7 +29,7 @@ function getApplicationsForRequest($request_id, $applications) {
     return $result;
 }
 
-// Count pending applications for a request
+
 function countPendingApplications($request_id, $applications) {
     $count = 0;
     foreach ($applications as $app) {
@@ -40,7 +40,7 @@ function countPendingApplications($request_id, $applications) {
     return $count;
 }
 
-// Check if request has any pending applications
+
 function hasPendingApplications($request_id, $applications) {
     foreach ($applications as $app) {
         if ($app["request_id"] == $request_id && $app["status"] == "pending") {
@@ -50,7 +50,7 @@ function hasPendingApplications($request_id, $applications) {
     return false;
 }
 
-// Check if request is completed (has accepted application)
+
 function isRequestCompleted($request_id, $applications) {
     foreach ($applications as $app) {
         if ($app["request_id"] == $request_id && $app["status"] == "accepted") {
@@ -188,7 +188,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
             text-decoration: underline;
         }
 
-        /* ---------- REQUEST CARDS ---------- */
+        
         .request-grid {
             display: grid;
             gap: 20px;
@@ -279,7 +279,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
             line-height: 1.6;
         }
 
-        /* ---------- APPLICATIONS SECTION ---------- */
+       
         .applications-section {
             margin-top: 15px;
             padding-top: 15px;
@@ -394,7 +394,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
             padding: 10px 0;
         }
 
-        /* ===== UPLOAD FILE BUTTON ===== */
+       
         .upload-file-btn {
             display: inline-block;
             color: #ff6b6b;
@@ -441,7 +441,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
 <body>
 
     <div class="container">
-        <!-- HEADER -->
+        
         <div class="header">
             <div>
                 <h1>📋 My <span>Requests</span></h1>
@@ -453,14 +453,14 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
             </div>
         </div>
 
-        <!-- SUCCESS MESSAGE -->
+        
         <?php if ($success_message != "") { ?>
             <div class="success-message">
                 <?php echo $success_message; ?>
             </div>
         <?php } ?>
 
-        <!-- REQUEST LIST -->
+        
         <?php if (count($my_requests) > 0) { ?>
             <div class="request-grid">
                 <?php foreach ($my_requests as $request) { 
@@ -500,7 +500,6 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
                             <?php echo htmlspecialchars($request["description"]); ?>
                         </div>
 
-                        <!-- APPLICATIONS -->
                         <div class="applications-section">
                             <h4>💼 Applications (<?php echo count($request_apps); ?>)</h4>
                             
@@ -540,7 +539,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
                             <?php } ?>
                         </div>
 
-                        <!-- ===== UPLOAD FILE BUTTON ===== -->
+                        
                         <a href="upload_fileS.php?request_id=<?php echo $request["id"]; ?>" class="upload-file-btn">
                             📎 Upload File for this Request
                         </a>
@@ -558,7 +557,7 @@ if (isset($_GET["rejected"]) && $_GET["rejected"] == "success") {
         <?php } ?>
 
         <div class="footer-note">
-            🔒 You can accept or reject applications. Accepted deals are confirmed instantly!
+             You can accept or reject applications. Accepted deals are confirmed instantly!
         </div>
     </div>
 

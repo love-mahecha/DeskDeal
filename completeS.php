@@ -1,8 +1,8 @@
 <?php
-// Start session to check if user is logged in
+
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -176,7 +176,7 @@ $request_count = isset($_SESSION["requests"]) ? count($_SESSION["requests"]) : 0
             👤 <?php echo htmlspecialchars($user_email); ?>
         </div>
 
-        <!-- STATS -->
+       
         <div class="stats-grid">
             <div class="stat-box">
                 <div class="number"><?php echo $request_count; ?></div>
@@ -188,7 +188,7 @@ $request_count = isset($_SESSION["requests"]) ? count($_SESSION["requests"]) : 0
             </div>
         </div>
 
-        <!-- FEEDBACK SECTION -->
+        
         <div class="feedback-section">
             <h3>💬 Feedback Received</h3>
             <?php if (count($feedback_list) > 0) { ?>

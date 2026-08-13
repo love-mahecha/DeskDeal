@@ -1,8 +1,8 @@
 <?php
-// Start session to check if user is logged in
+
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -12,28 +12,28 @@ $user_email = $_SESSION["user_email"];
 $success_message = "";
 $error_message = "";
 
-// Initialize feedback array in session if it doesn't exist
+
 if (!isset($_SESSION["feedback"])) {
     $_SESSION["feedback"] = [];
 }
 
-// Handle feedback submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_feedback"])) {
     $feedback = trim(htmlspecialchars($_POST["feedback"]));
     
     if (empty($feedback)) {
         $error_message = "❌ Please write your feedback before submitting!";
     } else {
-        // Store feedback
+       
         $_SESSION["feedback"][] = [
             "email" => $user_email,
             "feedback" => $feedback,
             "timestamp" => date("Y-m-d H:i:s")
         ];
         
-        $success_message = "✅ Thank you for your feedback!";
+        $success_message = " Thank you for your feedback!";
         
-        // Redirect to completion page after 2 seconds
+      
         header("refresh:2; url=completeS.php");
     }
 }
@@ -224,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_feedback"])) {
             </div>
         <?php } ?>
 
-        <!-- FEEDBACK FORM -->
+       
         <form action="" method="POST">
             <div class="form-group">
                 <label for="feedback">What can we improve on this site? <span class="required">*</span></label>
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_feedback"])) {
         <a href="completeS.php" class="btn-skip">⏭️ Skip & Continue →</a>
 
         <p class="note">
-            🔒 Your feedback helps us make this site better for everyone!
+             Your feedback helps us make this site better for everyone!
         </p>
     </div>
 

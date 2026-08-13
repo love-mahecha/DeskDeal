@@ -2,7 +2,7 @@
 session_start();
 
 
-// Error handling for taken requests
+
 $error_message = "";
 if (isset($_GET["error"])) {
     if ($_GET["error"] == "taken") {
@@ -17,7 +17,6 @@ if (isset($_GET["error"])) {
 
 
 
-// If not logged in, redirect to login
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -25,15 +24,15 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Get all requests from session
+
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 
-// Filter only pending requests
+
 $pending_requests = array_filter($requests, function($req) {
     return $req["status"] == "pending";
 });
 
-// Success message after applying
+
 $success_message = "";
 if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
     $success_message = "✅ You have successfully applied for this work!";
@@ -175,7 +174,7 @@ if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
             color: #666;
         }
 
-        /* ---------- REQUEST CARDS ---------- */
+       
         .request-grid {
             display: grid;
             gap: 20px;
@@ -294,7 +293,7 @@ if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
 <body>
 
     <div class="container">
-        <!-- HEADER -->
+        
         <div class="header">
             <div>
                 <h1>💼 <span>Available Work</span></h1>
@@ -306,7 +305,7 @@ if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
             </div>
         </div>
 
-        <!-- STATS -->
+        
         <div class="stats">
             <div class="stat-card">
                 <div class="number"><?php echo count($pending_requests); ?></div>
@@ -326,14 +325,14 @@ if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
 <?php } ?>
 
 
-        <!-- SUCCESS MESSAGE -->
+        
         <?php if ($success_message != "") { ?>
             <div class="success-message">
                 <?php echo $success_message; ?>
             </div>
         <?php } ?>
 
-        <!-- REQUEST LIST -->
+        
         <?php if (count($pending_requests) > 0) { ?>
             <div class="request-grid">
                 <?php foreach ($pending_requests as $request) { ?>
@@ -382,7 +381,7 @@ if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
         <?php } ?>
 
         <div class="footer-note">
-            🔒 Only pending requests are shown here. Applied requests are hidden.
+             Only pending requests are shown here. Applied requests are hidden.
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -9,15 +9,15 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Get all applications
+
 $applications = isset($_SESSION["applications"]) ? $_SESSION["applications"] : [];
 
-// Filter applications by this worker
+
 $my_applications = array_filter($applications, function($app) use ($user_email) {
     return $app["worker_email"] == $user_email;
 });
 
-// Count statuses
+
 $pending_count = 0;
 $accepted_count = 0;
 $rejected_count = 0;
@@ -239,7 +239,7 @@ foreach ($my_applications as $app) {
             color: #721c24;
         }
 
-        /* ===== UPLOAD FILE BUTTON ===== */
+       
         .upload-file-btn {
             display: inline-block;
             color: #ff6b6b;
@@ -285,7 +285,7 @@ foreach ($my_applications as $app) {
 <body>
 
     <div class="container">
-        <!-- HEADER -->
+        
         <div class="header">
             <div>
                 <h1>💼 My <span>Applications</span></h1>
@@ -297,7 +297,7 @@ foreach ($my_applications as $app) {
             </div>
         </div>
 
-        <!-- STATS -->
+        
         <div class="stats">
             <div class="stat-card">
                 <div class="number pending"><?php echo $pending_count; ?></div>
@@ -313,7 +313,7 @@ foreach ($my_applications as $app) {
             </div>
         </div>
 
-        <!-- APPLICATION LIST -->
+        
         <?php if (count($my_applications) > 0) { ?>
             <div class="application-grid">
                 <?php foreach ($my_applications as $app) { ?>
@@ -329,7 +329,7 @@ foreach ($my_applications as $app) {
                                     <br>📝 Notes: <?php echo htmlspecialchars($app["notes"]); ?>
                                 <?php } ?>
                             </div>
-                            <!-- ===== UPLOAD FILE BUTTON ===== -->
+                            
                             <a href="upload_fileS.php?request_id=<?php echo $app["request_id"]; ?>" class="upload-file-btn">
                                 📎 Upload File
                             </a>
@@ -357,7 +357,7 @@ foreach ($my_applications as $app) {
         <?php } ?>
 
         <div class="footer-note">
-            🔒 Track your applications and see if you've been accepted or rejected.
+             Track your applications and see if you've been accepted or rejected.
         </div>
     </div>
 

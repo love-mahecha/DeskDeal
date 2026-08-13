@@ -1,8 +1,8 @@
 <?php
-// Start session to check if user is logged in
+
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Initialize requests array in session if it doesn't exist
+
 if (!isset($_SESSION["requests"])) {
     $_SESSION["requests"] = [];
 }
@@ -18,21 +18,20 @@ if (!isset($_SESSION["requests"])) {
 $success_message = "";
 $error_message = "";
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
-    // Get form data
+    
     $subject = htmlspecialchars($_POST["subject"]);
     $pages = htmlspecialchars($_POST["pages"]);
     $deadline = htmlspecialchars($_POST["deadline"]);
     $description = htmlspecialchars($_POST["description"]);
-    
-    // Validate
+   
     if (empty($subject) || empty($pages) || empty($deadline) || empty($description)) {
-        $error_message = "❌ Please fill in all fields!";
+        $error_message = " Please fill in all fields!";
     } elseif ($pages < 1) {
         $error_message = "❌ Number of pages must be at least 1!";
     } else {
-        // Create new request
+       
         $new_request = [
             "id" => count($_SESSION["requests"]) + 1,
             "subject" => $subject,
@@ -44,12 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             "created_at" => date("Y-m-d H:i:s")
         ];
         
-        // Add to session array
+      
         $_SESSION["requests"][] = $new_request;
-        // Redirect to feedback page after successful submission
+        
         header("Location: feedbackS.php");
         exit();
-        // $success_message = "✅ Your request has been posted successfully!";
+      
     }
 }
 ?>
@@ -121,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             margin-bottom: 20px;
         }
 
-        /* ---------- FORM ---------- */
+        
         .form-group {
             margin-bottom: 18px;
             text-align: left;
@@ -169,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             gap: 15px;
         }
 
-        /* ---------- BUTTONS ---------- */
+       
         .btn-submit {
             width: 100%;
             padding: 14px;
@@ -193,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             transform: scale(0.98);
         }
 
-        /* ---------- MESSAGES ---------- */
+        
         .success-message {
             background: #d4edda;
             color: #155724;
@@ -214,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             border-left: 4px solid #dc3545;
         }
 
-        /* ---------- REQUEST SUMMARY ---------- */
+       
         .request-summary {
             background: #f8f9fa;
             padding: 15px;
@@ -273,7 +272,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             </div>
         <?php } ?>
 
-        <!-- SUBMIT REQUEST FORM -->
+       
         <form action="" method="POST">
             <div class="form-group">
                 <label for="subject">Subject <span class="required">*</span></label>
@@ -302,7 +301,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             </button>
         </form>
 
-        <!-- SHOW LAST SUBMITTED REQUEST -->
+        
         <?php if ($success_message != "" && !empty($_SESSION["requests"])) { 
             $last_request = end($_SESSION["requests"]);
         ?>
@@ -317,7 +316,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
         <?php } ?>
 
         <!-- <p class="note">
-            🔒 After posting, you'll be redirected to the feedback page.
+            After posting, you'll be redirected to the feedback page.
         </p> -->
         <p class="note">
         Your request will be visible to all workers. They'll apply with their price and timeline.
@@ -325,7 +324,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
     </div>
 
     <script>
-        // Set minimum date to today for deadline
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('deadline').setAttribute('min', today);

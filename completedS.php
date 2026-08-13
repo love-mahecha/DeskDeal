@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// If not logged in, redirect to login
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -9,16 +9,15 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Get all requests
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 $applications = isset($_SESSION["applications"]) ? $_SESSION["applications"] : [];
 
-// Get only completed requests (where buyer is this user OR worker is this user)
+
 $completed_requests = [];
 
 foreach ($requests as $request) {
     if ($request["status"] == "completed") {
-        // Check if this user is the buyer OR worker
+        
         $is_buyer = ($request["buyer_email"] == $user_email);
         $is_worker = false;
         
@@ -309,7 +308,7 @@ foreach ($requests as $request) {
         <?php } ?>
 
         <div class="footer">
-            🔒 Completed deals are stored in your session and will be cleared on logout.
+             Completed deals are stored in your session and will be cleared on logout.
         </div>
     </div>
 

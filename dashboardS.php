@@ -1,14 +1,14 @@
 <?php
-// Start the session to check if the user is logged in
+
 session_start();
 
-// If the user is NOT logged in, kick them back to the login page
+
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
 }
 
-// Get the logged-in user's email
+
 $user_email = $_SESSION["user_email"];
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $user_email = $_SESSION["user_email"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - DeskDeal</title>
     <style>
-        /* ===== RESET & BASE ===== */
+        
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +26,7 @@ $user_email = $_SESSION["user_email"];
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* ===== BODY WITH WAVES ===== */
+        
         body {
             min-height: 100vh;
             display: flex;
@@ -69,7 +69,7 @@ $user_email = $_SESSION["user_email"];
             to { transform: rotate(360deg); }
         }
 
-        /* ===== DASHBOARD CONTAINER ===== */
+       
         .dashboard-container {
             position: relative;
             z-index: 10;
@@ -81,7 +81,7 @@ $user_email = $_SESSION["user_email"];
             max-width: 700px;
         }
 
-        /* ===== HEADER ===== */
+       
         .header {
             display: flex;
             justify-content: space-between;
@@ -141,7 +141,7 @@ $user_email = $_SESSION["user_email"];
             color: white;
         }
 
-        /* ===== WELCOME TEXT ===== */
+       
         .welcome-text {
             font-size: 15px;
             color: #555;
@@ -149,7 +149,7 @@ $user_email = $_SESSION["user_email"];
             text-align: center;
         }
 
-        /* ===== ROLE BUTTONS (2 COLUMN GRID) ===== */
+        
         .role-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -197,7 +197,7 @@ $user_email = $_SESSION["user_email"];
             margin-top: 4px;
         }
 
-        /* ===== QUICK LINKS (3 COLUMN GRID) ===== */
+        
         .quick-links {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -271,7 +271,7 @@ $user_email = $_SESSION["user_email"];
             color: white;
         }
 
-        /* ===== FREE WORK LINK ===== */
+        
         .free-work-link {
             display: block;
             text-align: center;
@@ -289,7 +289,7 @@ $user_email = $_SESSION["user_email"];
             background: #fff5f5;
         }
 
-        /* ===== NOTE ===== */
+        
         .note {
             text-align: center;
             font-size: 13px;
@@ -298,7 +298,7 @@ $user_email = $_SESSION["user_email"];
             padding-top: 15px;
         }
 
-        /* ===== RESPONSIVE ===== */
+        
         @media (max-width: 600px) {
             .dashboard-container {
                 padding: 25px 20px;
@@ -338,7 +338,7 @@ $user_email = $_SESSION["user_email"];
 <body>
 
     <div class="dashboard-container">
-        <!-- ===== HEADER ===== -->
+        
         <div class="header">
             <div class="left">
                 <span class="emoji">🎓</span>
@@ -350,10 +350,10 @@ $user_email = $_SESSION["user_email"];
             </div>
         </div>
 
-        <!-- ===== WELCOME ===== -->
+        
         <p class="welcome-text">What would you like to do today?</p>
 
-        <!-- ===== ROLE BUTTONS ===== -->
+       
         <div class="role-grid">
             <a href="buyerS.php" class="btn-role btn-buyer">
                 <span class="icon">📝</span>
@@ -367,7 +367,7 @@ $user_email = $_SESSION["user_email"];
             </a>
         </div>
 
-        <!-- ===== QUICK LINKS (Upload File REMOVED) ===== -->
+        
         <div class="quick-links">
             <a href="my_requestsS.php" class="quick-link green">📋 My Requests</a>
             <a href="my_applicationsS.php" class="quick-link purple">💼 My Applications</a>
@@ -376,12 +376,12 @@ $user_email = $_SESSION["user_email"];
             <a href="completedS.php" class="quick-link orange">✅ Completed</a>
         </div>
 
-        <!-- ===== FREE WORK LINK ===== -->
+        
         <a href="freeWorkS.php" class="free-work-link">
              Click here for free work!
         </a>
 
-        <!-- ===== NOTE ===== -->
+        
         <p class="note">
             💡 Choose your path: <strong>Get Work Done</strong> (hire help) or <strong>Do Work</strong> (earn money). Let's go! 
         </p>
