@@ -762,9 +762,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
 
                 <div class="scroll-transition-scale delay-5">
                     <div class="trust-badges">
-                        <span>Secure</span>
-                        <span>Student Friendly</span>
-                        <span>Trusted Community</span>
+                        <span>• Secure</span>
+                        <span>• Student Friendly</span>
+                        <span>• Trusted Community</span>
                     </div>
                 </div>
 
