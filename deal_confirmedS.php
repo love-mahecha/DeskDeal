@@ -329,7 +329,7 @@ if (!$request || !$application) {
             👤 <?php echo htmlspecialchars($user_email); ?>
         </div>
 
-        <div class="confetti">🎊 🥳 🎉 💫 ✨</div>
+        <div class="confetti"></div>
 
         <div class="deal-details">
             <div class="row">
@@ -371,16 +371,16 @@ if (!$request || !$application) {
         <div class="divider-line"></div>
 
         <p class="info-text">
-            ✅ The worker will now work on your assignment.<br>
+             The worker will now work on your assignment.<br>
             You can contact them via email.
         </p>
 
-        <a href="dashboardS.php" class="btn-dashboard">🏠 Return to Dashboard</a>
+        <a href="dashboardS.php" class="btn-dashboard"> Return to Dashboard</a>
         <br>
-        <a href="my_requestsS.php" class="btn-view-requests">📋 View All My Requests</a>
+        <a href="my_requestsS.php" class="btn-view-requests"> View All My Requests</a>
 
         <p class="note">
-            🔒 This deal is confirmed. Worker status has been updated to "Accepted".
+             This deal is confirmed. Worker status has been updated to "Accepted".
         </p>
     </div>
 

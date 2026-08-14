@@ -532,7 +532,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
                     </div>
 
                     <button type="submit" name="submit_application" class="btn-submit">
-                        📤 Submit Application
+                         Submit Application
                     </button>
                 </form>
             <?php } else { ?>
@@ -546,7 +546,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_application"]))
             <?php } ?>
 
             <div class="demo-note">
-                🎯 <strong>Demo Mode:</strong> You can apply to your own requests for demonstration purposes.
+                 <strong>Demo Mode:</strong> You can apply to your own requests for demonstration purposes.
             </div>
         </div>
     </div>

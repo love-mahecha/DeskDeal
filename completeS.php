@@ -284,11 +284,11 @@ $request_count = isset($_SESSION["requests"]) ? count($_SESSION["requests"]) : 0
         <div class="stats-grid">
             <div class="stat-box">
                 <div class="number"><?php echo $request_count; ?></div>
-                <div class="label">📝 Total Requests</div>
+                <div class="label"> Total Requests</div>
             </div>
             <div class="stat-box">
                 <div class="number"><?php echo count($feedback_list); ?></div>
-                <div class="label">💬 Feedback Given</div>
+                <div class="label"> Feedback Given</div>
             </div>
         </div>
 
@@ -307,11 +307,11 @@ $request_count = isset($_SESSION["requests"]) ? count($_SESSION["requests"]) : 0
         </div>
 
         <a href="dashboardS.php" class="btn-dashboard">
-            🏠 Return to Dashboard
+             Return to Dashboard
         </a>
 
         <p class="note">
-            🔒 Thank you for using DeskDeal!
+             Thank you for using DeskDeal!
         </p>
     </div>
 

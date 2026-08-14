@@ -369,7 +369,7 @@ $user_email = $_SESSION["user_email"];
             </div>
             <div class="right">
                 <span class="user-badge">👤 <?php echo htmlspecialchars($user_email); ?></span>
-                <a href="logoutS.php" class="logout-link">🚪 Logout</a>
+                <a href="logoutS.php" class="logout-link"> Logout</a>
             </div>
         </div>
 
@@ -389,19 +389,19 @@ $user_email = $_SESSION["user_email"];
         </div>
 
         <div class="quick-links">
-            <a href="my_requestsS.php" class="quick-link green"><span class="icon">📋</span> My Requests</a>
-            <a href="my_applicationsS.php" class="quick-link purple"><span class="icon">💼</span> My Apps</a>
-            <a href="email_logS.php" class="quick-link yellow"><span class="icon">📧</span> Email Log</a>
-            <a href="feedbackS.php" class="quick-link pink"><span class="icon">💬</span> Feedback</a>
-            <a href="completedS.php" class="quick-link orange"><span class="icon">✅</span> Completed</a>
+            <a href="my_requestsS.php" class="quick-link green"><span class="icon"></span> My Requests</a>
+            <a href="my_applicationsS.php" class="quick-link purple"><span class="icon"></span> My Apps</a>
+            <a href="email_logS.php" class="quick-link yellow"><span class="icon"></span> Email Log</a>
+            <a href="feedbackS.php" class="quick-link pink"><span class="icon"></span> Feedback</a>
+            <a href="completedS.php" class="quick-link orange"><span class="icon"></span> Completed</a>
         </div>
 
         <a href="freeWorkS.php" class="free-work-link">
-            🎉 Click here for free work! (Just kidding... maybe 😈)
+             Click here for free work!
         </a>
 
         <p class="note">
-            💡 Choose your path: <strong>Get Work Done</strong> (hire help) or <strong>Do Work</strong> (earn money). Let's go! 🚀
+            Choose your path: <strong>Get Work Done</strong> (hire help) or <strong>Do Work</strong> (earn money). Let's go! 
         </p>
     </div>
 

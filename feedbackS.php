@@ -332,19 +332,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_feedback"])) {
 
         <form action="" method="POST">
             <div class="form-group">
-                <label for="feedback">What can we improve on this site? <span class="required">*</span></label>
+                <label for="feedback">What can we improve on this site? <span class="required"></span></label>
                 <textarea id="feedback" name="feedback" placeholder="Tell us your thoughts... (e.g., Add more subjects, Better UI, Faster loading, etc.)" required></textarea>
             </div>
 
             <button type="submit" name="submit_feedback" class="btn-submit">
-                📤 Submit Feedback
+                 Submit Feedback
             </button>
         </form>
 
-        <a href="completeS.php" class="btn-skip">⏭️ Skip & Continue →</a>
+        <a href="completeS.php" class="btn-skip">⏭Skip & Continue →</a>
 
         <p class="note">
-            🔒 Your feedback helps us make DeskDeal better for everyone!
+             Your feedback helps us make DeskDeal better for everyone!
         </p>
     </div>
 

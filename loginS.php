@@ -654,7 +654,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             <div class="logo">DeskDeal</div>
             <h1><span>Student Learning</span> Made Simple</h1>
             <p>Post tasks, find help, or earn money — all in one place.</p>
-            <div class="cta-tag">🚀 GET STARTED</div>
+            <div class="cta-tag"> GET STARTED</div>
         </div>
 
         <a href="#login" class="scroll-indicator">
@@ -724,7 +724,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                     <div class="scroll-transition-right delay-2">
                         <div class="form-group">
                             <label for="email">Email Address</label>
-                            <span class="input-icon">📧</span>
+                            <span class="input-icon"></span>
                             <input type="email" id="email" name="email" placeholder="student@deskdeal.com" required>
                         </div>
                     </div>
@@ -732,7 +732,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                     <div class="scroll-transition-right delay-3">
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <span class="input-icon">🔒</span>
+                            <span class="input-icon"></span>
                             <input type="password" id="password" name="password" placeholder="Enter your password" required>
                         </div>
                     </div>

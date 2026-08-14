@@ -390,7 +390,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
             </div>
 
             <button type="submit" name="submit_request" class="btn-submit">
-                🚀 Post Request
+                 Post Request
             </button>
         </form>
 
@@ -408,7 +408,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_request"])) {
         <?php } ?>
 
         <p class="note">
-            📌 Your request will be visible to all workers. They'll apply with their price and timeline.
+             Your request will be visible to all workers. They'll apply with their price and timeline.
         </p>
     </div>
 
