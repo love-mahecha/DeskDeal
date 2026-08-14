@@ -12,9 +12,7 @@ A complete student work marketplace where students can post homework requests an
 - File Upload for Assignments
 - Email Notifications Log
 - Completed Deals Tracker
-- Funny Prank Page
-- Beautiful Wave Animation Background
-- Mobile Responsive
+   Wave Animation Background
 
  Installation
 
