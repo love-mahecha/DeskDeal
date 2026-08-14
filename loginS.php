@@ -189,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             50% { transform: rotate(45deg) translateY(8px); }
         }
 
-        /* ===== LOGIN SECTION ===== */
+        
         .login-section-wrapper {
             min-height: 100vh;
             display: flex;
@@ -212,7 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             z-index: 0;
         }
 
-        /* ===== SCROLL TRANSITIONS ===== */
+       
         .scroll-transition {
             opacity: 0;
             transform: translateY(60px);
@@ -257,14 +257,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             transform: scale(1);
         }
 
-        /* ===== DELAYS ===== */
+       
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
         .delay-5 { transition-delay: 0.5s; }
 
-        /* ===== LOGIN CONTAINER ===== */
+        
         .login-container {
             position: relative;
             z-index: 1;
@@ -566,7 +566,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             color: rgba(255, 255, 255, 0.4);
         }
 
-        /* ===== RESPONSIVE ===== */
+        
         @media (max-width: 1024px) {
             .hero-section .content h1 {
                 font-size: 42px;
@@ -642,7 +642,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
 </head>
 <body>
 
-    <!-- ===== VIDEO HERO SECTION ===== -->
+    
     <section class="hero-section" id="hero">
         <video autoplay muted loop playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-typing-on-a-laptop-in-a-modern-office-38618-large.mp4" type="video/mp4">
@@ -663,11 +663,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
         </a>
     </section>
 
-    <!-- ===== LOGIN SECTION WITH SCROLL TRANSITIONS ===== -->
+    
     <section class="login-section-wrapper" id="login">
         <div class="login-container">
 
-            <!-- LEFT SIDE - About Section -->
+          
             <div class="about-section">
                 <div class="scroll-transition-left delay-1">
                     <div class="logo-area">
@@ -705,7 +705,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                 </div>
             </div>
 
-            <!-- RIGHT SIDE - Login Form -->
+           
             <div class="login-section">
                 <div class="scroll-transition-right delay-1">
                     <h2>Welcome Back</h2>
@@ -773,7 +773,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     </section>
 
     <script>
-        // ===== SCROLL TRANSITION OBSERVER =====
+       
         document.addEventListener('DOMContentLoaded', function() {
             const elements = document.querySelectorAll('.scroll-transition, .scroll-transition-left, .scroll-transition-right, .scroll-transition-scale');
             
@@ -791,7 +791,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             elements.forEach(el => observer.observe(el));
         });
 
-        // ===== VIDEO AUTOPLAY FIX =====
+        
         document.querySelector('video')?.play();
     </script>
 

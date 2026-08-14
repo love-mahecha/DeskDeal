@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Error handling for taken requests
 $error_message = "";
 if (isset($_GET["error"])) {
     if ($_GET["error"] == "taken") {
@@ -13,7 +12,6 @@ if (isset($_GET["error"])) {
     }
 }
 
-// If not logged in, redirect to login
 if (!isset($_SESSION["user_email"])) {
     header("Location: loginS.php");
     exit();
@@ -21,15 +19,15 @@ if (!isset($_SESSION["user_email"])) {
 
 $user_email = $_SESSION["user_email"];
 
-// Get all requests from session
+
 $requests = isset($_SESSION["requests"]) ? $_SESSION["requests"] : [];
 
-// ===== DEMO MODE: Show all pending requests (including user's own) =====
+
 $pending_requests = array_filter($requests, function($req) {
     return $req["status"] == "pending";
 });
 
-// Success message after applying
+
 $success_message = "";
 if (isset($_GET["applied"]) && $_GET["applied"] == "success") {
     $success_message = "✅ You have successfully applied for this work!";

@@ -24,8 +24,7 @@ if (!$selected_request) {
     exit();
 }
 
-// ===== DEMO MODE: Allow users to apply to their own requests =====
-// Security check removed for demo purposes
+
 
 if ($selected_request["status"] == "applied" || $selected_request["status"] == "completed") {
     $already_applied = false;
